@@ -1,0 +1,47 @@
+    <%- include('../partials/head.ejs') %>
+    <link rel="stylesheet" href="styles.css">
+    <title>Home</title>
+</head>
+<body>
+        <h1 class="text-center">Please log in to be able to rate the movies!</h1>
+        <!-- flesh message once the signup is successful -->
+        <div class="container flesh-container">
+            <ul class="flash-block">
+                <% if (messages.success_msg) { %> 
+                <li class="text-success"><%= messages.success_msg %></li>
+                <% } %> 
+            </ul>
+        </div>
+
+        <!-- login form -->
+        <div class="container">
+            <div id="login-card" class="row">
+                <div class="col-sm-6 col-md-4 col-md-offset-4">
+                    <div class="account-wall">
+                        <img class="profile-img" src="https://th.bing.com/th/id/R.2153ae3a16a859e0b58ab1cdd7347da3?rik=cC6YZA0zOxX0zw&riu=http%3a%2f%2fwww.newdesignfile.com%2fpostpic%2f2009%2f03%2fplay-movie-icon_26187.png&ehk=lfkwiWGCrBLZRZ7POOvzQhg45Dbbh5TzzfTZlX5ovEE%3d&risl=&pid=ImgRaw&r=0"
+                            alt="">
+                        <form action="/login" method="POST" class="form-signin" novalidate>
+                            <input type="text" class="form-control" placeholder="Email" name="email" required autofocus>
+                            <input type="password" class="form-control" placeholder="Password" name="password" required>
+                            
+                            <!-- flesh messages about errors if fields are empty or email/password dont match -->
+                            <ul class="flash-block">
+                                <% if (messages.error ) { %> 
+                                <li class="text-danger"><%= messages.error %></li>
+                                <% } %> 
+                            </ul>
+                            
+                            <div class="text-center mt-4">
+                                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                                <a href="/signup" class="pull-right need-help d-block">Create an account</a><span class="clearfix"></span>
+                            </div>
+                        </form>
+                    </div>
+                    <a href="/" class="text-center new-account">Back to homepage</a>
+                </div>
+            </div>
+        </div>
+
+    <%- include('../partials/footer.ejs') %>
+</body>
+</html>

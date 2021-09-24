@@ -1,0 +1,46 @@
+<%- include('../partials/head')%>
+    <link rel="stylesheet" href="styles.css">
+    <title>Register page</title>
+</head>
+<body>
+    
+    <h1 class="text-center">Register to be able to rate movies.</h1>
+
+    <!-- flesh messages about errors if fields are empty or email/password dont match -->
+    <ul>
+        <% if (typeof errors != 'undefined') { %> <% errors.forEach(error => { %>
+                <li class="text-danger"><%= error.message %> </li>
+
+            <% }) %>
+        <% } %>
+    </ul>
+
+    <div class="container">
+        <div id="signup-card" class="row">
+            <div class="col-sm-6 col-md-4 col-md-offset-4">
+                <div class="account-wall">
+                    <img class="profile-img" src="https://th.bing.com/th/id/R.2153ae3a16a859e0b58ab1cdd7347da3?rik=cC6YZA0zOxX0zw&riu=http%3a%2f%2fwww.newdesignfile.com%2fpostpic%2f2009%2f03%2fplay-movie-icon_26187.png&ehk=lfkwiWGCrBLZRZ7POOvzQhg45Dbbh5TzzfTZlX5ovEE%3d&risl=&pid=ImgRaw&r=0"
+                        alt="">
+                    <form action="/register" method="POST" id="create-user-form" novalidate>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                            <input type="password" class="form-control" id="confirmed_password" name="confirmed_password" placeholder="Confirm password">
+                        
+                    
+                        
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-lg btn-primary btn-block" value="Register" id="registration-button">Register</button>
+                                <a href="/login" class="pull-right need-help d-block">Already registered</a>
+                            </div>
+                    </form>
+                </div>
+                <a href="/" class="text-center new-account">Back to homepage</a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="register-form-validation.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -5,17 +5,17 @@ const bcrypt = require('bcrypt');
 
 // Registration
 router.get('/', (req, res) => {
-    res.render('pages/register');
+    res.render('pages/signup');
 });
 
 router.post('/', (req, res) => {
-    let { firstname, lastname, email, password, confirmed_password } = req.body;
+    let { name, email, password, confirmed_password } = req.body;
     
 
     // Backend validation for the form
     const errors = [];
 
-    if (!firstname || !lastname || !email || !password || !confirmed_password) {
+    if (!name || !email || !password || !confirmed_password) {
         console.log(errors)
         errors.push({ message: "Please enter all fields." });
     }
@@ -47,7 +47,7 @@ router.post('/', (req, res) => {
                 const cleanedEmail = email.toLowerCase().trim()
 
                 // savind data in db
-                db.none('INSERT INTO users (firstname, lastname, email, password) VALUES ($1, $2, $3, $4);', [firstname, lastname, cleanedEmail, hash])
+                db.none('INSERT INTO users (name, email, password) VALUES ($1, $2, $3, $4);', [name, cleanedEmail, hash])
                 .then(() => {
                     req.flash("success_msg", "You are now registered, please log in");
                     res.redirect('/login');
