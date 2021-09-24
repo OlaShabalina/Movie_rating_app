@@ -1,0 +1,25 @@
+{
+  "name": "movie_rating_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon -r dotenv/config index.js",
+    "create-db": "psql -U postgres -f sql/create_db.sql",
+    "create-table": "psql -U postgres -d movie_db -f sql/create_table.sql",
+    "seed-table": "psql -U postgres -d movie_db -f sql/seed_table.sql",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^10.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-flash": "^0.0.2",
+    "express-session": "^1.17.2",
+    "morgan": "^1.10.0",
+    "pg-promise": "^10.11.0"
+  }
+}
