@@ -1,11 +1,11 @@
-    <!-- partials/head -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <%- include('../partials/head.ejs') %>
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <title>Home</title>
 </head>
 <body>
-    <!-- partials/nav -->
     <%- include('../partials/nav.ejs') %>
     <!-- flesh messages after redirecting from login -->
     <div class="container flesh-container">
@@ -22,10 +22,7 @@
             <label class="form-label" for="searchText">Search for any movie:</label>
             <input type="text" class="form-control mb-3" id="searchText" placeholder="Search Movies...">
             <label class="form-label" for="genre">Search by genre:</label>
-            <select id="genre" name="genre" class="form-select mb-3">
-                <option value="comedy">genres will be coming to this dropdown dynamically</option>
-                <option value="action">action</option>
-                <option value="etc">comedy</option>
+            <select id="genreSelection" name="genre" class="form-select mb-3">
             </select> 
         </form>
     </div>
@@ -41,53 +38,15 @@
                 <th scope="col">Details</th>
             </tr>
             </thead>
-            <tbody>
-            <tr>
-                <th scope="col"> <img src="https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_UY67_CR0,0,45,67_AL_.jpg" alt="">  </th>
-                <td>1. The Shawshank Redemption (1994)</td>
-                <td><i class="material-icons mt-1">star</i> <strong>4</strong> </td>
-                <td><i class="material-icons">star_outline</i></td>
-                <td><a href="#"><i class="material-icons">info</i></a></td>
-            </tr>
-            <tr>
-                <th scope="col"> <img src="https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_UY67_CR1,0,45,67_AL_.jpg" alt="">  </th>
-                <td>2. The Godfather (1972)</td>
-                <td><i class="material-icons">star</i><strong>5</strong></td>
-                <td><i class="material-icons">star_outline</i></td>
-                <td><a href="#"><i class="material-icons">info</i></a></td>
-            </tr>
-            <tr>
-                <th scope="col"> <img src="https://m.media-amazon.com/images/M/MV5BMWMwMGQzZTItY2JlNC00OWZiLWIyMDctNDk2ZDQ2YjRjMWQ0XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_UY67_CR1,0,45,67_AL_.jpg" alt="">  </th>
-                <td>3. The Godfather: Part II (1974)</td>
-                <td><i class="material-icons">star</i> <strong>3</strong></td>
-                <td><i class="material-icons">star_outline</i></td>
-                <td><a href="#"><i class="material-icons">info</i></a></td>
-            </tr>
-            <tr>
-                <th scope="col"> <img src="https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_UY67_CR0,0,45,67_AL_.jpg" alt="">  </th>
-                <td>1. The Shawshank Redemption (1994)</td>
-                <td><i class="material-icons mt-1">star</i> <strong>9.2</strong> </td>
-                <td><i class="material-icons">star_outline</i></td>
-                <td><a href="#"><i class="material-icons">info</i></a></td>
-            </tr>
-            <tr>
-                <th scope="col"> <img src="https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_UY67_CR1,0,45,67_AL_.jpg" alt="">  </th>
-                <td>2. The Godfather (1972)</td>
-                <td><i class="material-icons">star</i><strong>9.2</strong></td>
-                <td><i class="material-icons">star_outline</i></td>
-                <td><a href="#"><i class="material-icons">info</i></a></td>
-            </tr>
-            <tr>
-                <th scope="col"> <img src="https://m.media-amazon.com/images/M/MV5BMWMwMGQzZTItY2JlNC00OWZiLWIyMDctNDk2ZDQ2YjRjMWQ0XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_UY67_CR1,0,45,67_AL_.jpg" alt="">  </th>
-                <td>3. The Godfather: Part II (1974)</td>
-                <td><i class="material-icons">star</i> <strong>9.2</strong></td>
-                <td><i class="material-icons">star_outline</i></td>
-                <td><a href="#"><i class="material-icons">info</i></a></td>
-            </tr>
+            <tbody class="film-list">
+            
+            
             </tbody>
         </table>
     </div>
 
     <%- include('../partials/footer.ejs') %>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="home.js"></script>
 </body>
 </html>
