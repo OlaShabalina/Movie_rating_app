@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head.ejs') %>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>Home</title>
+</head>
+<body>
+    <%- include('../partials/nav.ejs') %>
+    <!-- flesh messages after redirecting from login -->
+    <div class="container flesh-container">
+        <ul class="flash-block">
+            <% if (messages.success_msg) { %> 
+            <li class="text-success"><%= messages.success_msg %></li>
+            <% } %> 
+        </ul>
+    </div>
+    
+    <div class="container">
+        <div class="container">
+            <div class="row gutters">
+                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="account-settings">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="row">
+                                
+                            </div>
+                            <div class="row">
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <div class="text-right">
+                                        <button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button>
+                                        <button type="button" id="submit" name="submit" class="btn btn-primary">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+                            
+    </div>
+
+
+    <%- include('../partials/footer.ejs') %>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="home.js"></script>
+</body>
+</html>

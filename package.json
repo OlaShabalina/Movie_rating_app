@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "nodemon -r dotenv/config index.js",
     "create-db": "psql -U postgres -f sql/create_db.sql",
-    "create-table": "psql -U postgres -d movie_db -f sql/create_table.sql",
-    "seed-table": "psql -U postgres -d movie_db -f sql/seed_table.sql",
+    "create-table": "psql -U postgres -d movie_rating_db -f sql/create_table.sql",
+    "seed-table": "psql -U postgres -d movie_rating_db -f sql/seed_table.sql",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
