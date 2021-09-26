@@ -23,8 +23,8 @@
                 <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
                     <div class="card h-100">
                         <div class="card-body">
-                            <div class="account-settings">
-                                
+                            <div class="movie-poster">
+                                <!-- movie poster will be placed here -->
                             </div>
                         </div>
                     </div>
@@ -33,12 +33,12 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <div class="row">
-                                
+                                <div class="movie-info">
+                                    <!-- movie info will be dynamically added here -->
+                                </div>
                             </div>
-                            <div class="row">
-                                
-                            </div>
-                            <div class="row">
+                            
+                            <div class="row gutters">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <div class="text-right">
                                         <button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button>
@@ -50,7 +50,7 @@
                     </div>
                 </div>
             </div>
-            </div>
+        </div>
 
                             
     </div>
@@ -58,6 +58,9 @@
 
     <%- include('../partials/footer.ejs') %>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="home.js"></script>
+    <script>
+        const movieId = <%= id %> 
+    </script>
+    <script src="details.js"></script>
 </body>
 </html>
