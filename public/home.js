@@ -27,21 +27,47 @@ $.ajax(`${base_URL}/genre/movie/list${api_key}`)
 
 
             // situations where we need to use different ajax requests
-            if (isTextFound && isGenreDefined) {
-                console.log("inside both filters")
-                console.log(e)
-                getAPIData(`${base_URL}/discover/keyword${api_key}&query=${searchText}&with_genres=${genre}`);
-            } else if (isTextFound && !isGenreDefined) {
-                console.log("inside text search")
-                getAPIData(`${base_URL}/search/movie/${api_key}&query=${searchText}`);
-                console.log("inside text search2")
-            } else if (!isTextFound && isGenreDefined) {
-                console.log("inside genre search")
-                getAPIData(`${base_URL}/discover/movie${api_key}&with_genres=${genre}`);
-                console.log("inside genre search2")
-            } else {
-                console.log("inside genre search")
+            if (!isTextFound && !isGenreDefined) {
+
+                // if no filters are selected - we show popular movies (function is below)
                 getAPIData(`${base_URL}/movie/popular${api_key}`);
+
+            } else if (isTextFound && !isGenreDefined) {
+
+                // if only text search is filled, we show API search by title request
+                getAPIData(`${base_URL}/search/movie/${api_key}&query=${searchText}`);
+
+            } else if (!isTextFound && isGenreDefined) {
+
+                // If only genres are selected, we show API search by genre request
+                getAPIData(`${base_URL}/discover/movie${api_key}&with_genres=${genre}`);
+
+            } else {
+
+                // If both text and genres are selected - we get API data by title (text search) and filter by genre
+                $.ajax(`${base_URL}/search/movie/${api_key}&query=${searchText}`)
+                    .then(data => {
+
+                    // this request is different so we add a full form not a function
+                    $(".film-list").empty();
+                    
+                    for (let film of data.results) {
+
+                        film.genre_ids.forEach(genreValue => {
+                            // filtering movies by genre without API request
+                            if (genreValue === Number(genre)) {
+                                let newFilm = $(`<tr>
+                                    <th scope="col"> <img src='${poster_URL}${film.poster_path}' style="width: 50px">  </th>
+                                    <td>${film.title}</td>
+                                    <td><i class="material-icons">star</i> <strong>9.2</strong></td>
+                                    <td><i class="material-icons">star_outline</i></td>
+                                    <td><a href="${film.id}"><i class="material-icons">info</i></a></td>
+                                    </tr>`);
+                                $(".film-list").append(newFilm)
+                            }
+                        })    
+                    }
+                });
             }
 
         });
