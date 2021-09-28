@@ -41,8 +41,19 @@
                             <div class="row gutters">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <div class="text-right">
-                                        <button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button>
-                                        <button type="button" id="submit" name="submit" class="btn btn-primary">Update</button>
+                                        <% if (typeof userId !== 'undefined') { %> 
+                                            <form action="/:id" method="POST" novalidate>
+                                                <input type="number" min="1" max="5">
+                                                <button type="submit">Submit rating</button>
+                                            </form>
+                                        <% } %>
+                                        <a href="/" class="btn btn-primary">Back to all movies</a>
+                                        <% if (typeof userId !== 'undefined') { %> 
+                                        <button type="button" id="rateMovie" name="submit" class="btn btn-primary">Rate movie</button>
+                                        <% } else { %> 
+                                        <button type="button" id="rateMovie" name="submit" class="btn btn-primary" disabled >Rate movie</button> 
+                                        <small class="text-secondary fst-italic">  Please log in to be able to rate this movie</small>  
+                                        <% } %> 
                                     </div>
                                 </div>
                             </div>
@@ -59,7 +70,12 @@
     <%- include('../partials/footer.ejs') %>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script>
-        const movieId = <%= id %> 
+        const movieId = <%= id %>;
+        const user_id = <% if (typeof userId !== "undefined") { %>
+        <%= userId %>
+        <% } else { %>
+        <%= 0 %>; 
+        <% } %>
     </script>
     <script src="details.js"></script>
 </body>

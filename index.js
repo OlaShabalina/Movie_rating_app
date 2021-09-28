@@ -15,7 +15,7 @@ app.use(flash());
 // routers
 
 const loginRouter = require('./routes/login');
-const homeRouter = require('./routes/homepage');
+const homeRouter = require('./routes/home');
 const signupRouter = require('./routes/signup');
 const logoutRouter = require('./routes/logout');
 
@@ -44,10 +44,10 @@ app.use(
 );
 
 //displaying pages using router
-app.use('/', homeRouter);
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/logout', logoutRouter);
+app.use('/', homeRouter);
 
 app.listen(PORT, () => {
   console.log(`server is lisning in : http://localhost:${PORT}`);
