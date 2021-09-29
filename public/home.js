@@ -121,62 +121,67 @@ const getDataFromAPI = (ajaxRequest) => {
         // generating movie tables
         results.forEach((film, index) => {
             
-            // getting data from backend on the user ratings
-            $.ajax('/api').then(allRatings => {
+                // getting data from backend on the user ratings
+                $.ajax('/api').then(allRatings => {
 
-                // if user exists in the system, we generate DOM this way (with user rating column)
-                if (user !== 0) {
+                    // if user exists in the system, we generate DOM this way (with user rating column)
+                    if (user !== 0) {
+                        // Start from getting average rating for movies where possible
 
-                    // Start from getting average rating for movies where possible
-                    // Filter array of ratings to see if there are multiple ratings for each movie
-                    const allRatingsForOneMovie = allRatings.ratings.filter((rating) => {
-                        return rating.movie_id === film.id;
-                    })
+                        // using function below to generate average rating and number of votes
+                        const average = getAverageRating(allRatings.ratings, film);
 
-                    // fining average from filtered array
-                    const averageRatingForEachMovie = allRatingsForOneMovie.reduce((r, c) => r + c.rating, 0) / allRatingsForOneMovie.length;
-                    // since not all movies have ratings, we show NA for movies that don't have it
-                    const isAverageExists = (averageRatingForEachMovie) ? averageRatingForEachMovie : '';
-                    // number is votes for each movie
-                    const numberOfVotes = allRatingsForOneMovie.length;
-                    
-                    // if user has rated the movie, we want to display that user rating
-                    allRatings.ratings.forEach((rating) => {
+                        // if user has rated the movie, we want to display that user rating
+                        allRatings.ratings.forEach((rating) => {
 
-                        // displaying user rating for the movies which have rating in our database
-                        if (film.id === rating.movie_id && rating.users_id === user) {
-                            showRowWithData(film, isAverageExists, numberOfVotes, rating.rating);
-                        } 
-                    });
-                    
-                    // now we load the rest of the movies (so the ones with rating don't double up)
-                    if ($(`.movie-title:eq(${index})`).text() !== film.title) {
+                            // displaying user rating for the movies which have rating in our database
+                            if (film.id === rating.movie_id && rating.users_id === user) {
+                                showRowWithData(film, average.isAverageExists, average.numberOfVotes, rating.rating);
+                            } 
+                        });
+                        
+                        // now we load the rest of the movies (so the ones with rating don't double up)
+                        if ($(`.movie-title:eq(${index})`).text() !== film.title) {
 
-                        // movies without user rating will have "?" or "not rated" as a text (still deciding)
-                        showRowWithData(film, isAverageExists, numberOfVotes, 'not rated');
+                            // movies without user rating will have "?" or "not rated" as a text (still deciding)
+                            showRowWithData(film, average.isAverageExists, average.numberOfVotes, 'not rated');
+                        }
+
+                    } else {
+
+                        const average = getAverageRating(allRatings.ratings, film);
+
+                        // for users which are not logged in we have a different display (no need to show user rating)
+                        showRowWithData(film, average.isAverageExists, average.numberOfVotes, 'N/A');
                     }
-
-                } else {
-
-                    const allRatingsForOneMovie = allRatings.ratings.filter((rating) => {
-                        return rating.movie_id === film.id;
-                    })
-
-                    // fining average from filtered array
-                    const averageRatingForEachMovie = allRatingsForOneMovie.reduce((r, c) => r + c.rating, 0) / allRatingsForOneMovie.length;
-                    // since not all movies have ratings, we show NA for movies that don't have it
-                    const isAverageExists = (averageRatingForEachMovie) ? averageRatingForEachMovie : '';
-                    // number is votes for each movie
-                    const numberOfVotes = allRatingsForOneMovie.length;
-
-                    // for users which are not logged in we have a different display (no need to show user rating)
-                    showRowWithData(film, isAverageExists, numberOfVotes, 'N/A');
-                }
-            })
-            .catch(err => console.log(err));
-                
+                })
+                .catch(err => console.log(err));      
         })
     });
+}
+
+// function to get average rating from an array
+
+const getAverageRating = (ratingsArray, film) => {
+    // Filter array of ratings to see if there are multiple ratings for each movie
+    const allRatingsForOneMovie = ratingsArray.filter((rating) => {
+        return rating.movie_id === film.id;
+    })
+
+    // fining average from filtered array
+    const averageRatingForEachMovie = allRatingsForOneMovie.reduce((r, c) => r + c.rating, 0) / allRatingsForOneMovie.length;
+    // since not all movies have ratings, we show NA for movies that don't have it
+    const isAverageExists = (averageRatingForEachMovie) ? averageRatingForEachMovie : '';
+    // number is votes for each movie
+    const numberOfVotes = allRatingsForOneMovie.length;
+
+    // add data to an object so we can return it from the function
+    const averageData = {
+        isAverageExists,
+        numberOfVotes
+    }
+
+    return averageData;
 }
 
 // function to generate each row
