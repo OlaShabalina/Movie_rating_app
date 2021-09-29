@@ -35,7 +35,6 @@ $.ajax(`${base_URL}/genre/movie/list${api_key}`)
         } else if (isTextFound && !isGenreDefined) {
         
             //Display movies based on the search text box
-            const searchTextValue = $('#searchText').val();
             getDataFromAPI(`${base_URL}/search/movie/${api_key}&query=${searchTextValue}`)
 
         } else if (!isTextFound && isGenreDefined) {
@@ -46,67 +45,68 @@ $.ajax(`${base_URL}/genre/movie/list${api_key}`)
         } else {       
             //  if both filters are selected we will be getting API be search text and filtering in the browser
 
-            // empty the table before adding movie results
-        $(".film-list").empty()
-        
-        const results = data.results;
-
-        // generating movie tables
-        results.forEach((film, index) => {
-            
-            // if user exists in the system, we generate DOM this way (with user rating column)
-            if (user !== 0) {
-                
-                // getting data from backend on the user ratings
-                $.ajax('/api').then(logedInUserReviews => {
-                    logedInUserReviews.userRatings.forEach(userRating => {
-
-                        // displaying user rating for the movies which have rating in our database
-                        if (film.id === userRating.movie_id) {
-                            showRowWithData(film, '1', '20', userRating.rating);
-                        } 
-                    });
+            $.ajax(`${base_URL}/search/movie/${api_key}&query=${searchTextValue}`)
+            .then(data => {
                     
-                    // now we load the rest of the movies (so the ones with rating don't double up)
-                    if ($(`.movie-title:eq(${index})`).text() !== film.title) {
+                // empty the table before adding movie results
+                $(".film-list").empty()
+                
+                const results = data.results;
 
-                        // movies without user rating will have "?" as a text
-                        showRowWithData(film, '1', '20', '?');
-                    }
+                // generating movie tables
+                results.forEach((film, index) => {
+
+
+                    film.genre_ids.forEach(i => {
+
+                        // only display movies if genre-id of movie is equal to the value in our genre dropdown
+                        if (i === Number(genreValue)) {
+
+                            // getting data from backend on the user ratings
+                            $.ajax('/api').then(allRatings => {
+
+                                // if user exists in the system, we generate DOM this way (with user rating column)
+                                if (user !== 0) {
+                                    // Start from getting average rating for movies where possible
+
+                                    // using function below to generate average rating and number of votes
+                                    const average = getAverageRating(allRatings.ratings, film);
+
+                                    // if user has rated the movie, we want to display that user rating
+                                    allRatings.ratings.forEach((rating) => {
+
+                                        // displaying user rating for the movies which have rating in our database
+                                        if (film.id === rating.movie_id && rating.users_id === user) {
+                                            showRowWithData(film, average.isAverageExists, average.numberOfVotes, rating.rating);
+                                        } 
+                                    });
+                                    
+                                    // now we load the rest of the movies (so the ones with rating don't double up)
+                                    if ($(`.movie-title:eq(${index})`).text() !== film.title) {
+
+                                        // movies without user rating will have "?" or "not rated" as a text (still deciding)
+                                        showRowWithData(film, average.isAverageExists, average.numberOfVotes, 'not rated');
+                                    }
+
+                                } else {
+
+                                    const average = getAverageRating(allRatings.ratings, film);
+                                    // for users which are not logged in we have a different display (no need to show user rating)
+                                    showRowWithData(film, average.isAverageExists, average.numberOfVotes, 'N/A');
+                                }
+                            })
+                            .catch((err) => {
+                                alert(`You messed something up: ${err}`);
+                            });  
+                        }
+                    })
                 })
-                .catch(err => console.log(err));
-                
-            } else {
-                // for users which are not logged in we have a different display (no need to show user rating)
-                showRowWithData(film, averageRating, usersVoted, 'NA');
-            }    
-                
-        })
-            
-            // Yet to introduce filter by genre 
-            // // Can't use the same function as this even requires filter after API request
-            // $(".film-list").empty()
-
-            // $.ajax(`${base_URL}/search/movie/${api_key}&query=${searchTextValue}`)
-            //     .then(data => {
-
-            //     for (let film of data.results) {
-
-            //         film.genre_ids.forEach(i =>{
-
-            //             if(i === Number(genreValue)) {
-            //             showRowWithData(film, 1, 20, 'NA')
-            //             }
-            //         }) 
-            //     }
-
-            // });
+                    
+                        
+            })
         }
     })
-}) 
-
-const usersVoted = 20;
-const averageRating = 20;
+})
 
 // Function to generate movie DOM using ajax request
 const getDataFromAPI = (ajaxRequest) => {
@@ -155,7 +155,9 @@ const getDataFromAPI = (ajaxRequest) => {
                         showRowWithData(film, average.isAverageExists, average.numberOfVotes, 'N/A');
                     }
                 })
-                .catch(err => console.log(err));      
+                .catch((err) => {
+                    console.log(`You messed something up: ${err}`);
+                });      
         })
     });
 }

@@ -50,7 +50,7 @@ app.use('/', homeRouter);
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/logout', logoutRouter);
-app.use('/details', detailsRouter);
+app.use('/:id', detailsRouter);
 app.use('/api', apiRouter);
 
 app.listen(PORT, () => {

@@ -9,11 +9,9 @@
     <%- include('../partials/nav.ejs') %>
     <!-- flesh messages after redirecting from login -->
     <div class="container flesh-container">
-        <ul class="flash-block">
-            <% if (messages.success_msg) { %> 
-            <li class="text-success"><%= messages.success_msg %></li>
-            <% } %> 
-        </ul>
+        <% if (messages.success_msg) { %> 
+        <p class="text-success text-center"><%= messages.success_msg %></li>
+        <% } %> 
     </div>
 
     <div class="container-sm">
@@ -47,6 +45,16 @@
 
     <%- include('../partials/footer.ejs') %>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        // passing user id inside the session
+            let user
+        <% if (typeof userId !== 'undefined') { %>
+            user = <%= userId %>
+        <% } else { %>
+            user = 0
+        <% } %>
+    </script>
+
     <script src="home.js"></script>
 </body>
 </html>
