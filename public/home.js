@@ -77,7 +77,7 @@ $.ajax(`${base_URL}/genre/movie/list${api_key}`)
 
                                         // displaying user rating for the movies which have rating in our database
                                         if (film.id === rating.movie_id && rating.users_id === user) {
-                                            showRowWithData(film, average.isAverageExists, average.numberOfVotes, rating.rating);
+                                            showRowWithData(film, average.averageRatingForEachMovie, average.numberOfVotes, rating.rating);
                                         } 
                                     });
                                     
@@ -85,14 +85,14 @@ $.ajax(`${base_URL}/genre/movie/list${api_key}`)
                                     if ($(`.movie-title:eq(${index})`).text() !== film.title) {
 
                                         // movies without user rating will have "?" or "not rated" as a text (still deciding)
-                                        showRowWithData(film, average.isAverageExists, average.numberOfVotes, 'not rated');
+                                        showRowWithData(film, average.averageRatingForEachMovie, average.numberOfVotes, 'not rated');
                                     }
 
                                 } else {
 
                                     const average = getAverageRating(allRatings.ratings, film);
                                     // for users which are not logged in we have a different display (no need to show user rating)
-                                    showRowWithData(film, average.isAverageExists, average.numberOfVotes, 'N/A');
+                                    showRowWithData(film, average.averageRatingForEachMovie, average.numberOfVotes, 'N/A');
                                 }
                             })
                             .catch((err) => {
@@ -136,7 +136,7 @@ const getDataFromAPI = (ajaxRequest) => {
 
                             // displaying user rating for the movies which have rating in our database
                             if (film.id === rating.movie_id && rating.users_id === user) {
-                                showRowWithData(film, average.isAverageExists, average.numberOfVotes, rating.rating);
+                                showRowWithData(film, average.averageRatingForEachMovie, average.numberOfVotes, rating.rating);
                             } 
                         });
                         
@@ -144,7 +144,7 @@ const getDataFromAPI = (ajaxRequest) => {
                         if ($(`.movie-title:eq(${index})`).text() !== film.title) {
 
                             // movies without user rating will have "?" or "not rated" as a text (still deciding)
-                            showRowWithData(film, average.isAverageExists, average.numberOfVotes, 'not rated');
+                            showRowWithData(film, average.averageRatingForEachMovie, average.numberOfVotes, 'not rated');
                         }
 
                     } else {
@@ -152,11 +152,11 @@ const getDataFromAPI = (ajaxRequest) => {
                         const average = getAverageRating(allRatings.ratings, film);
 
                         // for users which are not logged in we have a different display (no need to show user rating)
-                        showRowWithData(film, average.isAverageExists, average.numberOfVotes, 'N/A');
+                        showRowWithData(film, average.averageRatingForEachMovie, average.numberOfVotes, 'N/A');
                     }
                 })
                 .catch((err) => {
-                    console.log(`You messed something up: ${err}`);
+                    alert(`You messed something up: ${err}`);
                 });      
         })
     });
@@ -170,16 +170,15 @@ const getAverageRating = (ratingsArray, film) => {
         return rating.movie_id === film.id;
     })
 
-    // fining average from filtered array
-    const averageRatingForEachMovie = allRatingsForOneMovie.reduce((r, c) => r + c.rating, 0) / allRatingsForOneMovie.length;
-    // since not all movies have ratings, we show NA for movies that don't have it
-    const isAverageExists = (averageRatingForEachMovie) ? averageRatingForEachMovie : '';
-    // number is votes for each movie
+    // finding an average rating for each movie (if there is one)
+    let averageRatingForEachMovie = (allRatingsForOneMovie.length > 0) ? (allRatingsForOneMovie.reduce((r, c) => r + c.rating, 0) / allRatingsForOneMovie.length).toFixed(1) : '?';
+    
+    // number of votes for each movie
     const numberOfVotes = allRatingsForOneMovie.length;
 
     // add data to an object so we can return it from the function
     const averageData = {
-        isAverageExists,
+        averageRatingForEachMovie,
         numberOfVotes
     }
 
