@@ -156,7 +156,7 @@ const getDataFromAPI = (ajaxRequest) => {
                     }
                 })
                 .catch((err) => {
-                    alert(`You messed something up: ${err}`);
+                    console.log(`You messed something up: ${err}`);
                 });      
         })
     });
@@ -166,6 +166,7 @@ const getDataFromAPI = (ajaxRequest) => {
 
 const getAverageRating = (ratingsArray, film) => {
     // Filter array of ratings to see if there are multiple ratings for each movie
+
     const allRatingsForOneMovie = ratingsArray.filter((rating) => {
         return rating.movie_id === film.id;
     })

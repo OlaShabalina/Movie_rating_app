@@ -1,7 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
     <%- include('../partials/head.ejs') %>
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <title>Home</title>
 </head>
@@ -10,7 +8,7 @@
     <!-- flesh messages after redirecting from login -->
     <div class="container flesh-container">
         <% if (messages.success_msg) { %> 
-        <p class="text-success text-center"><%= messages.success_msg %></li>
+            <p class="text-success text-center"><%= messages.success_msg %></li>
         <% } %> 
     </div>
 
@@ -18,7 +16,7 @@
         <h3 class="text-center">Search For Any Movie</h3>
         <form id="searchForm">
             <label class="form-label" for="searchText">Search for any movie:</label>
-            <input type="text" class="form-control mb-3" id="searchText" name="searchText" placeholder="Search Movies...">
+            <input type="text" class="form-control mb-3" id="searchText" placeholder="Search Movies...">
             <label class="form-label" for="genre">Search by genre:</label>
             <select id="genreSelection" name="genre" class="form-select mb-3">
             </select> 
@@ -37,15 +35,16 @@
             </tr>
             </thead>
             <tbody class="film-list">
-            
+        
             
             </tbody>
         </table>
     </div>
 
     <%- include('../partials/footer.ejs') %>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
     <script>
+
         // passing user id inside the session
             let user
         <% if (typeof userId !== 'undefined') { %>

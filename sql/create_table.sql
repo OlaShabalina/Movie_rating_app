@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS movies(
     review_id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL,
+    users_id INT NOT NULL,
     movie_id INT NOT NULL,
     movie_rating INT CHECK (movie_rating BETWEEN 1 AND 5) NOT NULL,
     CONSTRAINT fk_users 

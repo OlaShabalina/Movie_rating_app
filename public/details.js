@@ -16,9 +16,8 @@ $.ajax(`${base_URL}/movie/${movieId}${api_key}`)
         generateDOMElfromAPI(movie.title, "Movie title");
         generateDOMElfromAPI(movie.overview, "Synopsis");
 
-
-        console.log(movie)
     })
+    .catch((err) => console.log(err))
 
 
 const generateDOMElfromAPI = (elementAPI, label) => {

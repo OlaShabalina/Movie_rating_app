@@ -50,8 +50,8 @@ app.use('/', homeRouter);
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/logout', logoutRouter);
-app.use('/', detailsRouter);
 app.use('/api', apiRouter);
+app.use('/', detailsRouter);
 
 app.listen(PORT, () => {
   console.log(`server is lisning in : http://localhost:${PORT}`);
