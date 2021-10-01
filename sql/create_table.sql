@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS movies(
     movie_id INT NOT NULL,
     movie_rating INT CHECK (movie_rating BETWEEN 1 AND 5) NOT NULL,
     CONSTRAINT fk_users 
-        FOREIGN KEY(user_id)
-            REFERENCES users(user_id)
+        FOREIGN KEY(users_id)
+            REFERENCES users(users_id)
                 ON DELETE CASCADE
 );

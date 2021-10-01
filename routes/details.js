@@ -6,51 +6,35 @@ router.get('/:id', (req, res) => {
     const { id } = req.params;
     const userId = req.session.userId;
 
-    console.log(req.params.id)
+    // check if the user left rating for the movie
+    db.oneOrNone('SELECT rating FROM movies WHERE users_id = $1 AND movie_id = $2', [ userId, id ] )
+        .then((rating) => {
 
-    db.oneOrNone(
-      "SELECT movie_id, users_id, rating FROM movies WHERE users_id = $1 AND movie_id = $2;",
-      [userId, id]
-    )
-      .then((rating) => {
+            if (rating) {
+                res.render('pages/details', { id, userId, rating: rating.rating })
+            } else {
+                res.render('pages/details', { id, userId })
+            }
+        })
+        .catch((err) => {
+            res.json(err)
+        })
+})
 
-        console.log(rating)
-        
-        if (rating) {
-          res.render('./pages/details', { userId, id, rating: rating.rating });
-        } else {
-          res.render("./pages/details", { id, userId });
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        res.send(error);
-      });
-});
+router.post('/:id', (req,res) => {
+    const { id } = req.params;
+    const { rating } = req.body;
+    const userId = req.session.userId;
 
-router.post('/:id', (req, res) => {
-    let { id } = req.params;
-
-    console.log(id)
-    console.log(res.body.rating);
-    console.log(req.session.userId);
-    console.log(req.params.id);
-
-    console.log('we are there')
-
-    db.none(
-    "INSERT INTO movies (movie_id, users_id, rating) VALUES ($1, $2, $3);",
-    [req.params.id, req.session.userId, req.body.rating])
+    db.none("INSERT INTO movies (movie_id, users_id, rating) VALUES ($1, $2, $3);", [id, userId, rating])
     .then(() => {
-      // console.log(rating);
-      console.log(req.session.userId);
-      res.redirect('/:id');
+
+      res.redirect("/:id");
     })
     .catch((err) => {
       console.log(err);
-      res.send(err);
+      res.json(err);
     });
-});
-
+})
 
 module.exports = router;

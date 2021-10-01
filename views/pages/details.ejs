@@ -1,4 +1,4 @@
-    <%- include('../partials/head.ejs') %>
+    <!-- <%- include('../partials/head.ejs') %>
 
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -43,7 +43,7 @@
                                         <!-- if user is logged in but hasn't rated the movie yet -->
                                         <% if (typeof userId !== 'undefined' && typeof rating === 'undefined') { %> 
                                             <form action="/:id" method="POST">
-                                                <input type="number" min="1" max="5" name="rating">
+                                                <input type="number" min="1" max="5" name="rating" id="rating">
                                                 <button type="submit">Submit rating</button>
                                             </form>
                                             <a href="/" class="btn btn-primary">Back to all movies</a>
@@ -85,4 +85,4 @@
     </script>
     <script src="details.js"></script>
 </body>
-</html>
+</html> -->
