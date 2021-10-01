@@ -6,14 +6,18 @@ router.get('/:id', (req, res) => {
     const { id } = req.params;
     const userId = req.session.userId;
 
+    console.log(req.params.id)
+
     db.oneOrNone(
       "SELECT movie_id, users_id, rating FROM movies WHERE users_id = $1 AND movie_id = $2;",
       [userId, id]
     )
       .then((rating) => {
+
+        console.log(rating)
         
         if (rating) {
-          res.render('./pages/details', { userId, id, rating });
+          res.render('./pages/details', { userId, id, rating: rating.rating });
         } else {
           res.render("./pages/details", { id, userId });
         }
@@ -28,7 +32,7 @@ router.post('/:id', (req, res) => {
     let { id } = req.params;
 
     console.log(id)
-    console.log(req.body.rating);
+    console.log(res.body.rating);
     console.log(req.session.userId);
     console.log(req.params.id);
 

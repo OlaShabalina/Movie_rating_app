@@ -39,18 +39,27 @@
                             <div class="row gutters">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <div class="text-right">
-                                        <% if (typeof userId !== 'undefined') { %> 
-                                            <form action="/:id" method="POST" novalidate>
+
+                                        <!-- if user is logged in but hasn't rated the movie yet -->
+                                        <% if (typeof userId !== 'undefined' && typeof rating === 'undefined') { %> 
+                                            <form action="/:id" method="POST">
                                                 <input type="number" min="1" max="5" name="rating">
                                                 <button type="submit">Submit rating</button>
                                             </form>
-                                        <% } %>
-                                        <a href="/" class="btn btn-primary">Back to all movies</a>
-                                        <% if (typeof userId !== 'undefined') { %> 
-                                        <button type="button" id="rateMovie" name="submit" class="btn btn-primary">Rate movie</button>
+                                            <a href="/" class="btn btn-primary">Back to all movies</a>
+                                            <button type="button" id="rateMovie" name="submit" class="btn btn-primary" disabled >Rate movie</button>
+
+                                        <!-- if user is logged in but already rated the movie -->
+                                        <% } else if (typeof userId !== 'undefined' && typeof rating !== 'undefined') { %>
+                                            <p class="text-secondary fst-italic">You already rated this movie as <strong><%= rating %> </strong></p> 
+                                            <a href="/" class="btn btn-primary">Back to all movies</a>
+                                            <button type="button" id="rateMovie" name="submit" class="btn btn-primary" disabled >Rate movie</button>
+
+                                        <!-- if user is not logged in -->
                                         <% } else { %> 
-                                        <button type="button" id="rateMovie" name="submit" class="btn btn-primary" disabled >Rate movie</button> 
-                                        <small class="text-secondary fst-italic">  Please log in to be able to rate this movie</small>  
+                                            <a href="/" class="btn btn-primary">Back to all movies</a>
+                                            <button type="button" id="rateMovie" name="submit" class="btn btn-primary" disabled >Rate movie</button> 
+                                            <small class="text-secondary fst-italic">  Please log in to be able to rate this movie</small>  
                                         <% } %> 
                                     </div>
                                 </div>
