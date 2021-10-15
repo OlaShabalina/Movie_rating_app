@@ -66,7 +66,7 @@ $.ajax(`${base_URL}/genre/movie/list${api_key}`)
                             $.ajax('/api').then(allRatings => {
 
                                 // if user exists in the system, we generate DOM this way (with user rating column)
-                                if (user !== 0) {
+                                if (user) {
                                     // Start from getting average rating for movies where possible
 
                                     // using function below to generate average rating and number of votes
@@ -125,7 +125,7 @@ const getDataFromAPI = (ajaxRequest) => {
                 $.ajax('/api').then(allRatings => {
 
                     // if user exists in the system, we generate DOM this way (with user rating column)
-                    if (user !== 0) {
+                    if (user) {
                         // Start from getting average rating for movies where possible
 
                         // using function below to generate average rating and number of votes
@@ -172,7 +172,7 @@ const getAverageRating = (ratingsArray, film) => {
     })
 
     // finding an average rating for each movie (if there is one)
-    let averageRatingForEachMovie = (allRatingsForOneMovie.length > 0) ? (allRatingsForOneMovie.reduce((r, c) => r + c.rating, 0) / allRatingsForOneMovie.length).toFixed(1) : '?';
+    let averageRatingForEachMovie = (allRatingsForOneMovie.length > 0) ? (allRatingsForOneMovie.reduce((r, c) => r + c.rating, 0) / allRatingsForOneMovie.length).toFixed(1) : '0';
     
     // number of votes for each movie
     const numberOfVotes = allRatingsForOneMovie.length;
@@ -189,11 +189,11 @@ const getAverageRating = (ratingsArray, film) => {
 // function to generate each row
 const showRowWithData = (film, averageRating, usersVoted, yourVote) => {
     let newFilm = $(`<tr>
-        <th scope="col"> <img src='${poster_URL}${film.poster_path}' style="width: 50px">  </th>
+        <th scope="col"> <a href="/movie/${film.id}"><img src='${poster_URL}${film.poster_path}' style="width: 50px"> </a> </th>
         <td class="movie-title">${film.title}</td>
         <td><i class="material-icons">star</i> <strong>${averageRating}</strong>(${usersVoted})</td>
         <td><i class="material-icons">star</i>${yourVote}</td>
-        <td><a href="${film.id}"><i class="material-icons">info</i></a></td>
+        <td><a href="/movie/${film.id}"><i class="material-icons">info</i></a></td>
         </tr>`)
     $(".film-list").append(newFilm);
 }

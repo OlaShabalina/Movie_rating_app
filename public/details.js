@@ -1,3 +1,5 @@
+console.log(movieId)
+
 const base_URL = 'https://api.themoviedb.org/3';
 const api_key = '?api_key=0bb6bae245d4da7f34903447b12c0209';
 const poster_URL = 'https://image.tmdb.org/t/p/original/';

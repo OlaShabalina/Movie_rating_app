@@ -47,12 +47,12 @@ app.use(
 );
 
 //displaying pages using router
-app.use('/', homeRouter);
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/logout', logoutRouter);
 app.use('/api', apiRouter);
-app.use('/', detailsRouter);
+app.use('/movie', detailsRouter);
+app.use('/', homeRouter);
 app.use('/*', pageNotFoundRouter)
 
 app.listen(PORT, () => {

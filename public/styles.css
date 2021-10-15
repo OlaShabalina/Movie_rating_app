@@ -84,4 +84,7 @@ h1 {
     padding-top: 20px;
 }
 
-/* design for the page with movie details  */
+.flesh-container {
+    display: flex;
+    justify-content: center;
+}

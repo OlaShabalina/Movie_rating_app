@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../database');
 
-router.get('/:id', (req, res) => {
+router.get('/:id([0-9]+)', (req, res) => {
     const { id } = req.params;
     const userId = req.session.userId;
 
@@ -11,12 +11,14 @@ router.get('/:id', (req, res) => {
         .then((rating) => {
 
             if (rating) {
-                res.render('pages/details', { id, userId, rating: rating.rating })
+                const movieRating = rating.rating;
+                res.render('pages/details', { id, userId, movieRating })
             } else {
                 res.render('pages/details', { id, userId })
             }
         })
         .catch((err) => {
+            console.log(err)
             res.json(err)
         })
 })
@@ -26,13 +28,16 @@ router.post('/:id', (req,res) => {
     const { rating } = req.body;
     const userId = req.session.userId;
 
-    db.none("INSERT INTO movies (movie_id, users_id, rating) VALUES ($1, $2, $3);", [id, userId, rating])
+    const cleanedRating = Number(rating);
+    const movieId = Number(id);
+
+    db.none("INSERT INTO movies (users_id, movie_id, rating) VALUES ($1, $2, $3);", [userId, movieId, cleanedRating])
     .then(() => {
 
-      res.redirect("/:id");
+      res.redirect(`/movie/${movieId}`);
     })
     .catch((err) => {
-      console.log(err);
+
       res.json(err);
     });
 })

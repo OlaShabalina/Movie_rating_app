@@ -7,13 +7,15 @@
     <h1 class="text-center">Register to be able to rate movies.</h1>
 
     <!-- flesh messages about errors if fields are empty or email/password dont match -->
-    <ul>
-        <% if (typeof errors != 'undefined') { %> <% errors.forEach(error => { %>
-                <li class="text-danger"><%= error.message %> </li>
+    <div class="container flesh-container">
+        <ul>
+            <% if (typeof errors != 'undefined') { %> <% errors.forEach(error => { %>
+                    <li class="text-danger"><%= error.message %> </li>
 
-            <% }) %>
-        <% } %>
-    </ul>
+                <% }) %>
+            <% } %>
+        </ul>
+    </div>
 
     <div class="container">
         <div id="signup-card" class="row">
