@@ -2,7 +2,7 @@
 
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <title>Home</title>
+    <title>Movie details</title>
 </head>
 <body>
     <%- include('../partials/nav.ejs') %>
@@ -42,10 +42,12 @@
 
                                         <!-- if user is logged in but hasn't rated the movie yet -->
                                         <% if (typeof userId !== 'undefined' && typeof movieRating === 'undefined') { %> 
-                                            <form action="/movie/<%= id %> " method="POST">
-                                                <input type="number" min="1" max="5" name="rating" id="rating">
-                                                <button type="submit">Submit rating</button>
-                                            </form>
+                                            <div class="container mb-3 mt-2" id="form-cntainer">
+                                                <form class="container" action="/movie/<%= id %> " method="POST">
+                                                    <input class="form-number-input" type="number" min="1" max="5" name="rating" id="rating">
+                                                    <button class="btn btn-outline-secondary" type="submit">Submit rating</button>
+                                                </form>
+                                            </div>
                                             <a href="/" class="btn btn-primary">Back to all movies</a>
                                             <button type="button" id="rateMovie" name="submit" class="btn btn-primary" disabled >Rate movie</button>
 

@@ -28,3 +28,10 @@ const generateDOMElfromAPI = (elementAPI, label) => {
         <p class="ps-3 mt-2"> ${elementAPI} </p>
     `);
 }
+
+// working on the star rating 
+$("input[type='radio']").click(() => {
+    const sim = $("input[type='radio']:checked").val();
+    //alert(sim);
+    if (sim<3) { $('.myratings').css('color','red'); $(".myratings").text(sim); }else{ $('.myratings').css('color','green'); $(".myratings").text(sim); } 
+});
