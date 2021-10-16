@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon -r dotenv/config index.js",
+    "start": "node -r dotenv/config index.js",
     "create-db": "psql -U postgres -f sql/create_db.sql",
     "create-table": "psql -U postgres -d movie_rating_db -f sql/create_table.sql",
     "seed-table": "psql -U postgres -d movie_rating_db -f sql/seed_table.sql",
@@ -24,5 +25,8 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.12"
+  },
+  "engines": {
+    "node": "14.x"
   }
 }
