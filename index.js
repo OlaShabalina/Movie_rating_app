@@ -56,5 +56,5 @@ app.use('/', homeRouter);
 app.use('/*', pageNotFoundRouter)
 
 app.listen(PORT, () => {
-  console.log(`server is lisning in : http://localhost:${PORT}`);
+  console.log(`server is lisning on PORT: ${PORT}`);
 });
