@@ -139,9 +139,14 @@ const getDataFromAPI = (ajaxRequest) => {
                                 showRowWithData(film, average.averageRatingForEachMovie, average.numberOfVotes, rating.rating);
                             } 
                         });
+
+                        console.log(film.title)
+                        console.log($(`.movie-title:eq(${index})`).text())
                         
                         // now we load the rest of the movies (so the ones with rating don't double up)
                         if ($(`.movie-title:eq(${index})`).text() !== film.title) {
+
+
 
                             // movies without user rating will have "?" or "not rated" as a text (still deciding)
                             showRowWithData(film, average.averageRatingForEachMovie, average.numberOfVotes, 'not rated');
